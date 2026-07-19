@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kepler's Oracle
 
-## Getting Started
+> *The discovery of planets beyond our solar system has always fascinated humanity. Every confirmed exoplanet brings us one step closer to answering one of humanity's biggest questions: Are we alone in the universe? When I learned that NASA has made real exoplanet data publicly available, I wanted to explore how artificial intelligence could help analyze this enormous amount of information. That curiosity inspired me to build Kepler's Oracle.*
 
-First, run the development server:
+**Kepler's Oracle** is an advanced machine learning project and interactive dashboard that classifies potential exoplanets using real NASA datasets (Kepler Objects of Interest). 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project goes beyond simple scripts—it provides a fully interactive web application where users can explore the cosmos, visualize data, and simulate exoplanet predictions in real-time.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend / Dashboard:** Streamlit, Plotly
+- **Machine Learning Core:** Scikit-learn, XGBoost, LightGBM
+- **Data Processing:** Pandas, NumPy, Imbalanced-learn (SMOTE)
+- **Explainable AI:** SHAP (SHapley Additive exPlanations)
+- **Language:** Python 3.9+
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Robust Data Pipeline:** Cleans and preprocesses raw sensor data, handles missing values, and selects the most relevant astrophysical features.
+- **Ensemble Machine Learning:** Uses **XGBoost** (eXtreme Gradient Boosting) optimized via `RandomizedSearchCV` for high-accuracy multi-class predictions (`CONFIRMED`, `CANDIDATE`, `FALSE POSITIVE`).
+- **Explainable AI (SHAP):** Breaks open the "black box" of the model. It provides clear, visual explanations of *why* the model makes its decisions, highlighting the importance of features like Planetary Radius (`koi_prad`) and Transit Depth (`koi_depth`).
+- **Interactive Dashboard:** A beautifully designed Streamlit web application that lets you explore the data visually and tweak a live prediction simulator.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Setup Instructions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Install Dependencies:**
+   Ensure you have Python 3.9+ installed. Run the following command in the project root:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Deploy on Vercel
+2. **Run the ML Pipeline:**
+   Before launching the app, you need to train the model and generate the evaluation artifacts.
+   ```bash
+   python src/data_prep.py
+   python src/train.py
+   python src/evaluate.py
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Launch the Dashboard:**
+   Start the interactive Streamlit application:
+   ```bash
+   streamlit run app.py
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## The Journey & Challenges
+
+Building this project taught me much more than just coding. I learned how to work with real scientific datasets, prepare data for machine learning, and compare different classification algorithms. 
+
+One of the biggest challenges was working with real-world data from the Kepler pipeline. The dataset contained missing values and complex features that required careful preprocessing. Choosing the right algorithm (XGBoost) and improving the model's performance required several rounds of hyperparameter tuning and testing. 
+
+This project is not just about predicting exoplanets—it is about demonstrating how AI can support scientific discovery. I hope Kepler's Oracle inspires more students to explore the intersection of astronomy, data science, and artificial intelligence, and shows how technology can help us better understand our universe.
+
+---
+*Created for the Celesta India High School Exoplanet Data Challenge.*
